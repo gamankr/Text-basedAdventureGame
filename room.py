@@ -2,13 +2,14 @@
 Creating Room class and defining getter/setter methods
 '''
 
+from character import Character
 
 class Room:
     def __init__(self, room_name):
         self.name = room_name
         self.description = None
         self.linked_rooms = {}
-
+        self.character = None
 
     def set_name(self, room_name):
         self.name = room_name
@@ -21,6 +22,15 @@ class Room:
 
     def get_description(self):
         return self.description
+
+    '''
+        To set a Character object in the room
+    '''
+    def set_character(self, character: Character):
+        self.character = character
+
+    def get_character(self):
+        return self.character
 
     def describe(self):
         print(self.description)
@@ -51,8 +61,10 @@ class Room:
     def move(self, direction):
         if direction in self.linked_rooms:
             # self.linked_rooms[direction].get_details()
-            return self.linked_rooms[direction]
+            room_changed = True
+            return self.linked_rooms[direction], room_changed
         else:
             print("You can't go that way")
-            return self
+            room_changed = False
+            return self, room_changed
 
